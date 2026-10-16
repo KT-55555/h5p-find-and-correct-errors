@@ -1,0 +1,25 @@
+# Release checklist — 1.0.5 / 1.0.3 public RC
+
+- [x] Requirements audit completed; no open P0/P1 implementation gap.
+- [x] Runtime/editor versions bumped and JSON validated.
+- [x] Node unit, model, import, state and DOM tests pass.
+- [x] Rendered Chrome suite passes with learner/editor axe scans.
+- [x] Preserved local WordPress backed up before upgrade.
+- [x] Official H5P validation/storage install path passes.
+- [x] Existing content survives upgrade.
+- [x] Fresh native create/save/reopen/edit/run passes.
+- [x] State v3, retry limit and xAPI payload verified on host.
+- [x] Private five-error exercise passes 10/10 on loopback host only.
+- [x] Desktop, 390x844 and 320px-at-200%-zoom host layouts checked.
+- [x] Library-only and synthetic packages validate.
+- [x] Public RC built from an allow-list and contains no private exercise.
+- [x] SHA-256 checksums generated.
+- [x] English and French author guidance, notices and limitations included.
+- [x] Default packaging excludes internal fixtures and produces deterministic archives.
+- [x] Separate public repository export created from an explicit allow-list with new history.
+- [x] Public worktree, Git refs and nested H5P archives pass privacy/secret/path scans.
+- [x] GitHub Actions uses read-only permissions, pinned action SHAs and no host credentials.
+- [ ] NVDA and VoiceOver human sessions — not tested; follow the published script.
+- [ ] Moodle, Lumi, H5P.com, Brightspace/LEARN, LTI, real LRS and gradebook — not tested.
+- [ ] Physical touch and mobile screen-reader session — not tested.
+- [ ] GitHub-hosted CI and release publication — pending authenticated GitHub access.

@@ -1,0 +1,10 @@
+{
+  "semantics": [
+    { "label": "Task description" },
+    { "label": "Exercise text and error annotations", "description": "Use the visual editor or switch to compact markup. The saved FCE2 model preserves target metadata." },
+    { "label": "Legacy per-error settings", "description": "Compatibility settings for older content." },
+    { "label": "Behavioural settings" },
+    { "label": "Text overrides and translations" }
+  ]
+}
+

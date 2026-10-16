@@ -1,0 +1,258 @@
+[
+  {
+    "name": "taskDescription",
+    "type": "text",
+    "widget": "html",
+    "label": "Task description",
+    "importance": "high",
+    "default": "Find each error and type its correction.",
+    "enterMode": "p",
+    "tags": ["p", "br", "strong", "em", "ul", "ol", "li"]
+  },
+  {
+    "name": "markup",
+    "type": "text",
+    "widget": "findAndCorrectErrors",
+    "label": "Exercise text and error annotations",
+    "importance": "high",
+    "description": "Use the visual editor or switch to compact markup. The saved FCE2 model preserves stable target IDs and per-target metadata.",
+    "default": "The students [was|were] ready."
+  },
+  {
+    "name": "errorSettings",
+    "type": "list",
+    "label": "Legacy per-error settings",
+    "importance": "low",
+    "entity": "error setting",
+    "optional": true,
+    "description": "Compatibility settings for content created before the visual editor. New content stores these details inside the visual editor model.",
+    "field": {
+      "name": "setting",
+      "type": "group",
+      "fields": [
+        {
+          "name": "errorNumber",
+          "type": "number",
+          "label": "Error number",
+          "min": 1
+        },
+        {
+          "name": "hint",
+          "type": "text",
+          "label": "Hint",
+          "optional": true
+        },
+        {
+          "name": "explanation",
+          "type": "text",
+          "widget": "html",
+          "label": "Explanation",
+          "optional": true,
+          "tags": ["p", "br", "strong", "em"]
+        },
+        {
+          "name": "maxAttempts",
+          "type": "number",
+          "label": "Maximum correction attempts (0 means unlimited)",
+          "default": 0,
+          "min": 0
+        }
+      ]
+    }
+  },
+  {
+    "name": "behaviour",
+    "type": "group",
+    "label": "Behavioural settings",
+    "importance": "medium",
+    "fields": [
+      {
+        "name": "mode",
+        "type": "select",
+        "label": "Configuration mode",
+        "default": "standard",
+        "options": [
+          { "value": "standard", "label": "Standard" },
+          { "value": "advanced", "label": "Advanced" }
+        ]
+      },
+      {
+        "name": "validationTiming",
+        "type": "select",
+        "label": "Correction validation",
+        "default": "live",
+        "options": [
+          { "value": "live", "label": "Check discovered corrections immediately" },
+          { "value": "deferred", "label": "Check corrections at finish" }
+        ]
+      },
+      {
+        "name": "caseSensitive",
+        "type": "boolean",
+        "label": "Case sensitive",
+        "default": false
+      },
+      {
+        "name": "collapseWhitespace",
+        "type": "boolean",
+        "label": "Ignore repeated whitespace",
+        "default": true
+      },
+      {
+        "name": "punctuation",
+        "type": "select",
+        "label": "Punctuation checking",
+        "default": "preserve",
+        "options": [
+          { "value": "preserve", "label": "Require punctuation as authored" },
+          { "value": "ignore-terminal", "label": "Ignore terminal punctuation" }
+        ]
+      },
+      {
+        "name": "identificationPoints",
+        "type": "number",
+        "label": "Points for finding an error",
+        "default": 1,
+        "min": 0,
+        "decimals": 1
+      },
+      {
+        "name": "correctionPoints",
+        "type": "number",
+        "label": "Points for a correct correction",
+        "default": 1,
+        "min": 0,
+        "decimals": 1
+      },
+      {
+        "name": "wrongTokenPenalty",
+        "type": "number",
+        "label": "First wrong-click penalty per distinct token",
+        "default": 0.5,
+        "min": 0,
+        "decimals": 1
+      },
+      {
+        "name": "incorrectCorrectionPenalty",
+        "type": "number",
+        "label": "Penalty per incorrect correction attempt",
+        "default": 0,
+        "min": 0,
+        "decimals": 1
+      },
+      {
+        "name": "hintPenalty",
+        "type": "number",
+        "label": "Penalty per hint",
+        "default": 0,
+        "min": 0,
+        "decimals": 1
+      },
+      {
+        "name": "countDisplay",
+        "type": "select",
+        "label": "Error count display",
+        "default": "remaining",
+        "options": [
+          { "value": "total", "label": "Show total errors" },
+          { "value": "remaining", "label": "Show remaining errors" },
+          { "value": "hidden", "label": "Hide the count" }
+        ]
+      },
+      {
+        "name": "autoComplete",
+        "type": "boolean",
+        "label": "Complete automatically when all errors are corrected",
+        "default": true
+      },
+      {
+        "name": "enableRetry",
+        "type": "boolean",
+        "label": "Enable Retry",
+        "default": true
+      },
+      {
+        "name": "maxRetries",
+        "type": "number",
+        "label": "Maximum retries (0 means unlimited)",
+        "default": 0,
+        "min": 0
+      },
+      {
+        "name": "enableSolutionsButton",
+        "type": "boolean",
+        "label": "Enable Show solution",
+        "default": true
+      },
+      {
+        "name": "solutionDisclosure",
+        "type": "select",
+        "label": "Correct-solution disclosure",
+        "default": "exhaustion",
+        "options": [
+          { "value": "exhaustion", "label": "Immediately when attempts are exhausted" },
+          { "value": "completion", "label": "Only after the exercise is finished" },
+          { "value": "never", "label": "Never disclose correct solutions" }
+        ]
+      },
+      {
+        "name": "feedbackTiming",
+        "type": "select",
+        "label": "Explanatory feedback timing",
+        "default": "immediate",
+        "options": [
+          { "value": "immediate", "label": "Immediately after a target is resolved" },
+          { "value": "final", "label": "Only in the final review" },
+          { "value": "never", "label": "Never show explanatory feedback" }
+        ]
+      },
+      {
+        "name": "enableHints",
+        "type": "boolean",
+        "label": "Enable per-target hints",
+        "default": true
+      },
+      {
+        "name": "normalizeApostrophes",
+        "type": "boolean",
+        "label": "Treat straight and typographic apostrophes as equivalent",
+        "default": false
+      },
+      {
+        "name": "displayMode",
+        "type": "select",
+        "label": "Display after a correct correction",
+        "default": "correct",
+        "options": [
+          { "value": "correct", "label": "Canonical accepted correction" },
+          { "value": "learner", "label": "Learner's accepted response" },
+          { "value": "original", "label": "Original expression with feedback styling" }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "l10n",
+    "type": "group",
+    "label": "Text overrides and translations",
+    "importance": "low",
+    "common": true,
+    "fields": [
+      { "name": "check", "type": "text", "label": "Check button", "default": "Check" },
+      { "name": "finish", "type": "text", "label": "Finish button", "default": "Finish" },
+      { "name": "retry", "type": "text", "label": "Retry button", "default": "Retry" },
+      { "name": "showSolution", "type": "text", "label": "Show solution button", "default": "Show solution" },
+      { "name": "noError", "type": "text", "label": "No-error feedback", "default": "No error here." },
+      { "name": "foundError", "type": "text", "label": "Found-error feedback", "default": "Error found. Type the correction." },
+      { "name": "correct", "type": "text", "label": "Correct feedback", "default": "Correct." },
+      { "name": "incorrect", "type": "text", "label": "Incorrect feedback", "default": "That correction is not accepted." },
+      { "name": "inputLabel", "type": "text", "label": "Correction field label", "default": "Correction for error @num of @total" },
+      { "name": "tokenLabel", "type": "text", "label": "Selectable word label", "default": "Check word: @word" },
+      { "name": "remaining", "type": "text", "label": "Remaining errors", "default": "Errors remaining: @count" },
+      { "name": "total", "type": "text", "label": "Total errors", "default": "Errors to find: @count" },
+      { "name": "solutionPrefix", "type": "text", "label": "Solution prefix", "default": "Solution:" },
+      { "name": "hint", "type": "text", "label": "Hint button", "default": "Hint" }
+    ]
+  }
+]
+

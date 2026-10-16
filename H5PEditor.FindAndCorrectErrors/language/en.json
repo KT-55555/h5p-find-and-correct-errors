@@ -1,0 +1,26 @@
+{
+  "libraryStrings": {
+    "visual": "Visual",
+    "markup": "Markup",
+    "bold": "Bold",
+    "italic": "Italic",
+    "mark": "Mark as error",
+    "apply": "Apply markup",
+    "targets": "Error annotations",
+    "accepted": "Accepted corrections (one per line)",
+    "hints": "Hints (one per line)",
+    "feedback": "Explanation / feedback",
+    "attempts": "Maximum attempts (0 means unlimited)",
+    "identificationPoints": "Identification points (blank = global)",
+    "correctionPoints": "Correction points (blank = global)",
+    "incorrectPenalty": "Incorrect-attempt penalty (blank = global)",
+    "hintPenalty": "Hint penalty (blank = global)",
+    "move": "Move annotation",
+    "remove": "Delete annotation",
+    "empty": "Select an annotation to edit its details.",
+    "selectionError": "Select a word or contiguous phrase inside one paragraph. Nested or overlapping annotations are not allowed.",
+    "formatWarning": "This markup edit changes the text. Applying it will reset inline formatting; annotation metadata will be preserved by order. Click Apply markup again to confirm.",
+    "invalid": "Fix the markup error before returning to visual mode.",
+    "required": "Every annotation needs at least one accepted correction."
+  }
+}

@@ -1,0 +1,100 @@
+.h5p-find-and-correct-errors {
+  color: #1f2933;
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+}
+
+.h5p-find-and-correct-errors .fce-task-description {
+  margin-block-end: 1rem;
+}
+
+.h5p-find-and-correct-errors .fce-text {
+  white-space: pre-wrap;
+}
+
+.h5p-find-and-correct-errors .fce-token {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  border-radius: 0.2rem;
+  color: inherit;
+  cursor: pointer;
+  display: inline-flex;
+  font: inherit;
+  align-items: center;
+  justify-content: center;
+  line-height: inherit;
+  margin: 0;
+  min-block-size: 1.5rem;
+  min-inline-size: 1.5rem;
+  padding: 0.08rem 0.04rem;
+  text-align: inherit;
+}
+
+.h5p-find-and-correct-errors .fce-token:hover {
+  background: color-mix(in srgb, currentColor 8%, transparent);
+}
+
+.h5p-find-and-correct-errors .fce-token:focus-visible,
+.h5p-find-and-correct-errors .fce-correction:focus-visible,
+.h5p-find-and-correct-errors .fce-hint:focus-visible {
+  outline: 0.18rem solid #005fcc;
+  outline-offset: 0.12rem;
+}
+
+.h5p-find-and-correct-errors .fce-correction {
+  box-sizing: border-box;
+  font: inherit;
+  max-width: 100%;
+  min-width: 7rem;
+  padding: 0.2rem 0.35rem;
+}
+
+.h5p-find-and-correct-errors .fce-correction[aria-invalid="true"] {
+  border: 0.15rem solid #b42318;
+}
+
+.h5p-find-and-correct-errors .fce-corrected {
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-thickness: 0.15em;
+}
+
+.h5p-find-and-correct-errors .fce-explanation {
+  display: inline-block;
+  margin-inline-start: 0.4rem;
+  font-size: 0.9em;
+}
+
+.h5p-find-and-correct-errors .fce-explanation p {
+  display: inline;
+  margin: 0;
+}
+
+.h5p-find-and-correct-errors .fce-exhausted {
+  text-decoration: line-through;
+}
+
+.h5p-find-and-correct-errors .fce-status,
+.h5p-find-and-correct-errors .fce-remaining {
+  margin-block-start: 0.75rem;
+}
+
+.h5p-find-and-correct-errors .fce-hint {
+  margin-inline-start: 0.35rem;
+}
+
+@media (forced-colors: active) {
+  .h5p-find-and-correct-errors .fce-token:focus-visible,
+  .h5p-find-and-correct-errors .fce-correction:focus-visible {
+    outline: 0.18rem solid Highlight;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .h5p-find-and-correct-errors * {
+    scroll-behavior: auto !important;
+    transition: none !important;
+  }
+}
+

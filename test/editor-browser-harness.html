@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Find and Correct Errors editor browser harness</title>
+  <link rel="stylesheet" href="../H5PEditor.FindAndCorrectErrors/styles/find-and-correct-errors-editor.css">
+  <style>
+    body { font: 16px/1.5 system-ui, sans-serif; margin: 0 auto; max-width: 70rem; padding: 1rem; }
+    .harness-mount { border: 1px solid #cbd5e1; margin-block: 1rem; padding: 1rem; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Local editor browser harness</h1>
+    <div id="mount" class="harness-mount"></div>
+    <div id="reopen" class="harness-mount"></div>
+  </main>
+  <script>
+    (function () {
+      function jq(value) {
+        return { 0: value, length: 1, get: function (index) { return index === 0 ? value : undefined; } };
+      }
+      window.H5PEditor = {
+        widgets: {},
+        t: function (_library, key) { return key; }
+      };
+      window.H5P = { jQuery: jq };
+      window.jQuery = jq;
+      window.__saved = '';
+      window.__setValue = function (_field, value) { window.__saved = value; };
+    }());
+  </script>
+  <script src="../H5PEditor.FindAndCorrectErrors/scripts/find-and-correct-errors-editor.js"></script>
+  <script>
+    window.__editor = new H5PEditor.FindAndCorrectErrors(
+      {},
+      { name: 'markup', label: 'Exercise text and error annotations', default: 'The students [was|were] ready.' },
+      'The research team [were|was] ready. It [have completed|has completed||has finished] the review.',
+      window.__setValue
+    );
+    window.__editor.appendTo(jQuery(document.getElementById('mount')));
+    window.__reopen = function () {
+      document.getElementById('reopen').replaceChildren();
+      window.__editor2 = new H5PEditor.FindAndCorrectErrors(
+        {},
+        { name: 'markup', label: 'Reopened exercise' },
+        window.__saved,
+        function (_field, value) { window.__reopenedSaved = value; }
+      );
+      window.__editor2.appendTo(jQuery(document.getElementById('reopen')));
+      return window.__editor2;
+    };
+  </script>
+</body>
+</html>

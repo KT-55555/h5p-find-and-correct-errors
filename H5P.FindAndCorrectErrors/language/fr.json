@@ -1,0 +1,117 @@
+{
+  "semantics": [
+    {
+      "label": "Consigne",
+      "default": "Repérez chaque erreur et saisissez sa correction."
+    },
+    {
+      "label": "Texte et annotations d’erreur",
+      "description": "Utilisez l’éditeur visuel ou le balisage compact. Le modèle FCE2 conserve les métadonnées des cibles.",
+      "default": "Les étudiants [était|étaient] prêts."
+    },
+    {
+      "label": "Réglages hérités par erreur",
+      "description": "Réglages de compatibilité pour le contenu créé avant l’éditeur visuel.",
+      "entity": "réglage d’erreur",
+      "field": {
+        "fields": [
+          { "label": "Numéro de l’erreur" },
+          { "label": "Indice" },
+          { "label": "Explication" },
+          { "label": "Nombre maximal de tentatives de correction (0 = illimité)" }
+        ]
+      }
+    },
+    {
+      "label": "Réglages du comportement",
+      "fields": [
+        {
+          "label": "Mode de configuration",
+          "options": [
+            { "label": "Standard" },
+            { "label": "Avancé" }
+          ]
+        },
+        {
+          "label": "Validation des corrections",
+          "options": [
+            { "label": "Vérifier chaque correction dès sa saisie" },
+            { "label": "Vérifier les corrections à la fin" }
+          ]
+        },
+        { "label": "Respecter la casse" },
+        { "label": "Ignorer les espaces répétés" },
+        {
+          "label": "Vérification de la ponctuation",
+          "options": [
+            { "label": "Exiger la ponctuation définie" },
+            { "label": "Ignorer la ponctuation finale" }
+          ]
+        },
+        { "label": "Points pour le repérage d’une erreur" },
+        { "label": "Points pour une correction juste" },
+        { "label": "Pénalité au premier clic sur chaque mot sans erreur" },
+        { "label": "Pénalité par tentative de correction incorrecte" },
+        { "label": "Pénalité par indice" },
+        {
+          "label": "Affichage du nombre d’erreurs",
+          "options": [
+            { "label": "Afficher le nombre total d’erreurs" },
+            { "label": "Afficher le nombre d’erreurs restantes" },
+            { "label": "Masquer le nombre" }
+          ]
+        },
+        { "label": "Terminer automatiquement lorsque toutes les erreurs sont corrigées" },
+        { "label": "Activer Réessayer" },
+        { "label": "Nombre maximal de reprises (0 = illimité)" },
+        { "label": "Activer Afficher la solution" },
+        {
+          "label": "Divulgation des bonnes réponses",
+          "options": [
+            { "label": "Dès que les tentatives sont épuisées" },
+            { "label": "Seulement lorsque l’activité est terminée" },
+            { "label": "Ne jamais divulguer les bonnes réponses" }
+          ]
+        },
+        {
+          "label": "Moment de l’affichage des explications",
+          "options": [
+            { "label": "Dès qu’une cible est résolue" },
+            { "label": "Seulement dans la révision finale" },
+            { "label": "Ne jamais afficher les explications" }
+          ]
+        },
+        { "label": "Activer les indices par cible" },
+        { "label": "Traiter l’apostrophe droite et l’apostrophe typographique comme équivalentes" },
+        {
+          "label": "Affichage après une correction juste",
+          "options": [
+            { "label": "Correction canonique acceptée" },
+            { "label": "Réponse acceptée de l’apprenant" },
+            { "label": "Expression originale avec style de rétroaction" }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Textes et traductions",
+      "fields": [
+        { "label": "Bouton Vérifier", "default": "Vérifier" },
+        { "label": "Bouton Terminer", "default": "Terminer" },
+        { "label": "Bouton Réessayer", "default": "Réessayer" },
+        { "label": "Bouton Afficher la solution", "default": "Afficher la solution" },
+        { "label": "Rétroaction : aucune erreur", "default": "Il n’y a pas d’erreur ici." },
+        { "label": "Rétroaction : erreur repérée", "default": "Erreur repérée. Saisissez la correction." },
+        { "label": "Rétroaction : réponse juste", "default": "Correct." },
+        { "label": "Rétroaction : réponse incorrecte", "default": "Cette correction n’est pas acceptée." },
+        { "label": "Étiquette du champ de correction", "default": "Correction de l’erreur @num sur @total" },
+        { "label": "Étiquette d’un mot sélectionnable", "default": "Vérifier le mot : @word" },
+        { "label": "Erreurs restantes", "default": "Il en reste encore : @count" },
+        { "label": "Nombre total d’erreurs", "default": "Erreurs à trouver : @count" },
+        { "label": "Préfixe de la solution", "default": "Solution :" },
+        { "label": "Bouton Indice", "default": "Indice" }
+      ]
+    }
+  ]
+}
+

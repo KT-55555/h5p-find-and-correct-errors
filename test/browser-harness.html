@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Find and Correct Errors browser harness</title>
+  <link rel="stylesheet" href="../H5P.FindAndCorrectErrors/styles/find-and-correct-errors.css">
+  <style>body { font: 18px/1.5 system-ui, sans-serif; margin: 0 auto; max-width: 60rem; padding: 1rem; } .h5p-question-buttons { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1rem; } button { min-height: 2.75rem; }</style>
+</head>
+<body>
+  <main>
+    <h1>Local browser harness</h1>
+    <div id="mount"></div>
+    <output id="event-log" aria-live="polite"></output>
+  </main>
+  <script src="../tools/browser-harness-support.js"></script>
+  <script src="../H5P.FindAndCorrectErrors/scripts/find-and-correct-errors.js"></script>
+  <script>
+    window.__fce = new H5P.FindAndCorrectErrors({
+      taskDescription: '<p>Find the two errors and type their corrections.</p>',
+      markup: 'The research team [were|was] ready. It [have completed|has completed] the review.',
+      behaviour: { validationTiming: 'live', caseSensitive: false, collapseWhitespace: true, punctuation: 'preserve', identificationPoints: 1, correctionPoints: 1, wrongTokenPenalty: .5, incorrectCorrectionPenalty: .5, hintPenalty: .5, showRemaining: true, autoComplete: false, enableRetry: true, enableSolutionsButton: true, revealOnExhaustion: true, displayMode: 'correct' },
+      errorSettings: [{ setting: { errorNumber: 1, hint: 'The collective noun is singular here.', maxAttempts: 2 } }]
+    }, 1, {});
+    document.getElementById('mount').appendChild(window.__fce.wrapper);
+  </script>
+</body>
+</html>

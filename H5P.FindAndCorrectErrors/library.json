@@ -1,0 +1,47 @@
+{
+  "title": "Find and Correct Errors",
+  "description": "Find hidden errors in ordinary text and type their corrections.",
+  "majorVersion": 1,
+  "minorVersion": 0,
+  "patchVersion": 5,
+  "runnable": 1,
+  "author": "Kanstantsin Tsedryk",
+  "license": "MIT",
+  "machineName": "H5P.FindAndCorrectErrors",
+  "embedTypes": ["iframe"],
+  "coreApi": {
+    "majorVersion": 1,
+    "minorVersion": 28
+  },
+  "preloadedCss": [
+    { "path": "styles/find-and-correct-errors.css" }
+  ],
+  "preloadedJs": [
+    { "path": "scripts/find-and-correct-errors.js" }
+  ],
+  "preloadedDependencies": [
+    {
+      "machineName": "FontAwesome",
+      "majorVersion": 4,
+      "minorVersion": 5
+    },
+    {
+      "machineName": "H5P.JoubelUI",
+      "majorVersion": 1,
+      "minorVersion": 3
+    },
+    {
+      "machineName": "H5P.Question",
+      "majorVersion": 1,
+      "minorVersion": 5
+    }
+  ],
+  "editorDependencies": [
+    {
+      "machineName": "H5PEditor.FindAndCorrectErrors",
+      "majorVersion": 1,
+      "minorVersion": 0
+    }
+  ]
+}
+

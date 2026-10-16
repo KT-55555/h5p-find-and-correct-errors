@@ -1,0 +1,26 @@
+{
+  "name": "h5p-find-and-correct-errors",
+  "version": "1.0.5",
+  "private": true,
+  "description": "Native H5P content type for locating and correcting errors in text.",
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "test": "node --test",
+    "test:browser": "node tools/run-browser-e2e.mjs",
+    "test:host": "node tools/run-host-e2e.mjs",
+    "test:import": "node --test test/import-hotpot.test.mjs",
+    "validate": "node tools/validate-project.mjs",
+    "validate:packages": "powershell -ExecutionPolicy Bypass -File tools/validate-packages.ps1",
+    "import:batch": "node tools/import-hotpot-batch.mjs",
+    "check": "npm run validate && npm test",
+    "package": "powershell -ExecutionPolicy Bypass -File tools/package.ps1"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "axe-core": "4.11.0",
+    "jsdom": "26.1.0"
+  }
+}

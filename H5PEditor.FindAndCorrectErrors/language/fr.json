@@ -1,0 +1,26 @@
+{
+  "libraryStrings": {
+    "visual": "Visuel",
+    "markup": "Balisage",
+    "bold": "Gras",
+    "italic": "Italique",
+    "mark": "Marquer comme erreur",
+    "apply": "Appliquer le balisage",
+    "targets": "Annotations d’erreur",
+    "accepted": "Corrections acceptées (une par ligne)",
+    "hints": "Indices (un par ligne)",
+    "feedback": "Explication / rétroaction",
+    "attempts": "Nombre maximal d’essais (0 = illimité)",
+    "identificationPoints": "Points de repérage (vide = réglage global)",
+    "correctionPoints": "Points de correction (vide = réglage global)",
+    "incorrectPenalty": "Pénalité par essai incorrect (vide = réglage global)",
+    "hintPenalty": "Pénalité par indice (vide = réglage global)",
+    "move": "Déplacer l’annotation",
+    "remove": "Supprimer l’annotation",
+    "empty": "Sélectionnez une annotation pour modifier ses détails.",
+    "selectionError": "Sélectionnez un mot ou une expression continue dans un seul paragraphe. Les annotations imbriquées ou chevauchantes sont interdites.",
+    "formatWarning": "Cette modification change le texte. Son application réinitialisera la mise en forme; les métadonnées seront conservées par ordre. Cliquez de nouveau sur Appliquer le balisage pour confirmer.",
+    "invalid": "Corrigez l’erreur de balisage avant de revenir au mode visuel.",
+    "required": "Chaque annotation doit avoir au moins une correction acceptée."
+  }
+}

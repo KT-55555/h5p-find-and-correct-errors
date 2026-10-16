@@ -1,0 +1,14 @@
+{
+  "title": "Find and Correct Errors — Synthetic Sample",
+  "language": "en",
+  "mainLibrary": "H5P.FindAndCorrectErrors",
+  "embedTypes": ["iframe"],
+  "preloadedDependencies": [
+    {
+      "machineName": "H5P.FindAndCorrectErrors",
+      "majorVersion": 1,
+      "minorVersion": 0
+    }
+  ]
+}
+

@@ -1,0 +1,17 @@
+{
+  "title": "Find and Correct Errors Editor",
+  "description": "Visual and markup authoring widget for H5P.FindAndCorrectErrors.",
+  "majorVersion": 1,
+  "minorVersion": 0,
+  "patchVersion": 3,
+  "runnable": 0,
+  "author": "Kanstantsin Tsedryk",
+  "license": "MIT",
+  "machineName": "H5PEditor.FindAndCorrectErrors",
+  "preloadedCss": [
+    { "path": "styles/find-and-correct-errors-editor.css" }
+  ],
+  "preloadedJs": [
+    { "path": "scripts/find-and-correct-errors-editor.js" }
+  ]
+}

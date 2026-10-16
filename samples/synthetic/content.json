@@ -1,0 +1,30 @@
+{
+  "taskDescription": "<p>Find each error and type its correction.</p>",
+  "markup": "FCE2\n{\"schemaVersion\":2,\"source\":\"The research team were ready. It have completed the first review.\",\"html\":\"<p>The research team <span data-fce-id=\\\"error-1\\\">were</span> ready. It <span data-fce-id=\\\"error-2\\\">have completed</span> the first review.</p>\",\"errors\":[{\"id\":\"error-1\",\"start\":18,\"end\":22,\"source\":\"were\",\"accepted\":[\"was\"],\"hints\":[\"The subject is the singular collective noun ‘team’.\"],\"explanation\":\"<p>In this exercise, <em>team</em> is treated as singular.</p>\",\"maxAttempts\":0,\"points\":{},\"penalties\":{}},{\"id\":\"error-2\",\"start\":33,\"end\":47,\"source\":\"have completed\",\"accepted\":[\"has completed\"],\"hints\":[],\"explanation\":\"\",\"maxAttempts\":0,\"points\":{},\"penalties\":{}}]}",
+  "errorSettings": [
+    {
+      "setting": {
+        "errorNumber": 1,
+        "hint": "The subject is the singular collective noun ‘team’.",
+        "explanation": "In this exercise, ‘team’ is treated as singular.",
+        "maxAttempts": 0
+      }
+    }
+  ],
+  "behaviour": {
+    "mode": "standard",
+    "validationTiming": "live",
+    "caseSensitive": false,
+    "collapseWhitespace": true,
+    "identificationPoints": 1,
+    "correctionPoints": 1,
+    "wrongTokenPenalty": 0.5,
+    "incorrectCorrectionPenalty": 0,
+    "hintPenalty": 0,
+    "showRemaining": true,
+    "autoComplete": true,
+    "enableRetry": true,
+    "enableSolutionsButton": true
+  }
+}
+

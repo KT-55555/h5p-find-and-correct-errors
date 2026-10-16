@@ -1,0 +1,15 @@
+.h5peditor-fce { border: 1px solid #c9ced6; border-radius: .25rem; padding: .75rem; }
+.h5peditor-fce__tabs, .h5peditor-fce__toolbar { display: flex; flex-wrap: wrap; gap: .4rem; margin-block-end: .6rem; }
+.h5peditor-fce button { min-height: 2.5rem; }
+.h5peditor-fce__tab[aria-selected="true"] { font-weight: 700; text-decoration: underline; }
+.h5peditor-fce__visual { min-height: 10rem; border: 1px solid #707782; padding: .75rem; line-height: 1.6; }
+.h5peditor-fce__visual:focus { outline: .18rem solid #005fcc; outline-offset: .1rem; }
+.h5peditor-fce__visual [data-fce-id] { background: #fff3b0; border-bottom: .16rem solid #7a5200; }
+.h5peditor-fce__visual [data-fce-selected="true"] { outline: .18rem solid #005fcc; }
+.h5peditor-fce__markup { box-sizing: border-box; min-height: 12rem; width: 100%; }
+.h5peditor-fce__warning { color: #8a1c0d; font-weight: 600; min-height: 1.5rem; }
+.h5peditor-fce__details { border: 0; border-top: 1px solid #c9ced6; margin-block-start: .75rem; padding: .75rem 0 0; }
+.h5peditor-fce__details label { display: block; font-weight: 600; margin-block-start: .5rem; }
+.h5peditor-fce__details textarea, .h5peditor-fce__details input { box-sizing: border-box; width: 100%; }
+.h5peditor-fce__details-actions { display: flex; gap: .5rem; margin-block-start: .75rem; }
+@media (forced-colors: active) { .h5peditor-fce__visual [data-fce-id] { border: 2px solid Highlight; } }
