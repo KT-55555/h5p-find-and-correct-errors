@@ -1,5 +1,12 @@
 # Changelog
 
+## Runtime 1.0.5 / editor 1.0.3 release candidate 3 — 2026-10-16
+
+- Validated official installation, native authoring and learner operation on an authorized WordPress 7.1.3 / H5P 1.17.9 multisite subsite.
+- Added live French Unicode, alternative-answer, hint, fractional-scoring, deferred-validation, bounded-retry, keyboard and 320-pixel reflow evidence.
+- Extended the real-host test to capture and validate the emitted H5P `completed` xAPI event.
+- Added Milestone 6 Sandbox, accessibility, compatibility and release-gate reports; retained explicit NVDA, VoiceOver, touch, Moodle, Lumi and remote-LRS limitations.
+
 ## Runtime 1.0.5 / editor 1.0.3 public release candidate — 2026-10-16
 
 - Separated confidential legacy-import regression coverage from a fully synthetic public test suite.

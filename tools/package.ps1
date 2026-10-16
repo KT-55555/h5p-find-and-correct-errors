@@ -167,6 +167,9 @@ try {
         'SECURITY.md',
         'SECURITY_AND_LICENSE_AUDIT.md',
         'MILESTONE5_ACCESSIBILITY_REPORT.md',
+        'ACCESSIBILITY_REPORT_M6.md',
+        'COMPATIBILITY_REPORT_M6.md',
+        'RELEASE_GATE_M6.md',
         'THIRD_PARTY_NOTICES.md',
         'KNOWN_LIMITATIONS.md'
     )) {

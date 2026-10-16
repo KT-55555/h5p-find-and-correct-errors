@@ -6,7 +6,7 @@ Target: WCAG 2.2 Level AA. This is a test objective, not a conformance certifica
 
 ## Results
 
-- PASSED — Chrome 155 learner/editor axe scans in the rendered harness and loopback WordPress host found no serious or critical issue in the tested project scopes.
+- PASSED — all 15 Chrome 155 rendered-harness checks and all 7 loopback WordPress/H5P checks passed; learner/editor axe scans found no serious or critical issue in the tested project scopes.
 - PASSED — native-button Enter and Space activation, Tab/Shift+Tab movement, full-expression focus transfer, labeled correction input and visible focus behavior in real Chromium.
 - PASSED — live status, `aria-invalid`/description relationships, text feedback and non-colour terminal states in DOM and browser regressions.
 - PASSED — no horizontal overflow at 390x844, or at 320 CSS px with 200% and 400% page scale on the hosted item.

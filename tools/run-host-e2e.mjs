@@ -159,6 +159,9 @@ async function runLearner() {
   const payload = await evaluate(`(() => {
     const instance = ${frame}.H5P.instances[0];
     const statement = instance.getXAPIData().statement;
+    let emittedStatement = null;
+    instance.on('xAPI', event => { emittedStatement = event.data.statement; });
+    instance.triggerAnswered();
     const state = instance.getCurrentState();
     return {
       title: document.querySelector('h1, h2')?.textContent?.trim() || document.title,
@@ -169,6 +172,9 @@ async function runLearner() {
       responseCount: String(statement.result.response || '').split('[,]').length,
       interactionType: statement.object.definition.interactionType,
       correctResponsesPattern: statement.object.definition.correctResponsesPattern,
+      emittedVerbId: emittedStatement && emittedStatement.verb && emittedStatement.verb.id,
+      emittedScore: emittedStatement && emittedStatement.result && emittedStatement.result.score,
+      emittedCompletion: emittedStatement && emittedStatement.result && emittedStatement.result.completion,
       stateVersion: state.version,
       retries: state.retries,
       answered: state.answered,
@@ -183,7 +189,10 @@ async function runLearner() {
   assert.equal(payload.interactionType, 'fill-in');
   assert.equal(payload.responseCount, 2);
   assert.equal(payload.score.max, 5.5);
-  pass('Actual-host state and xAPI payload', `State v3 restored completed with retry count 1; fill-in score max ${payload.score.max}; two responses; Retry hidden at limit.`);
+  assert.match(payload.emittedVerbId, /\/completed$/);
+  assert.deepEqual(payload.emittedScore, payload.score);
+  assert.equal(payload.emittedCompletion, true);
+  pass('Actual-host state and xAPI event', `State v3 restored completed with retry count 1; observed emitted completed event with fill-in score max ${payload.score.max} and two responses; Retry hidden at limit.`);
   const learnerViolations = await axeScope(frame, '.h5p-find-and-correct-errors', 'Learner');
   await screenshot('m5-host-learner-desktop.png');
 

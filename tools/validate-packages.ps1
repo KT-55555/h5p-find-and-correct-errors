@@ -97,8 +97,10 @@ foreach ($name in $expected) {
 
 $releaseCandidate = Join-Path $dist 'release-candidate-1.0.5'
 $publicAllowList = @(
+    'ACCESSIBILITY_REPORT_M6.md',
     'AUTHOR_GUIDE.md',
     'COMPATIBILITY_MATRIX.md',
+    'COMPATIBILITY_REPORT_M6.md',
     'GUIDE_FR.md',
     'h5p-find-and-correct-errors-library-1.0.5.h5p',
     'INSTALLATION.md',
@@ -106,6 +108,7 @@ $publicAllowList = @(
     'LICENSE',
     'README.md',
     'RELEASE_CHECKLIST.md',
+    'RELEASE_GATE_M6.md',
     'RELEASE_NOTES.md',
     'SECURITY.md',
     'SECURITY_AND_LICENSE_AUDIT.md',

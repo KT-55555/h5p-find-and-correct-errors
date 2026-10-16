@@ -1,4 +1,4 @@
-# v1.0.5-rc.2 release notes
+# v1.0.5-rc.3 release notes
 
 This release candidate contains runtime library 1.0.5 and editor library 1.0.3.
 
@@ -11,7 +11,9 @@ This release candidate contains runtime library 1.0.5 and editor library 1.0.3.
 ## Verified
 
 - Native installation, update preservation, authoring save/reopen/edit and learner completion on loopback WordPress 7.1.3 with H5P 1.17.9
+- Official project-library installation plus synthetic native authoring and learner validation on an authorized WordPress 7.1.3 / H5P 1.17.9 multisite subsite
 - Scoring, penalties, bounded retry, state v3 restoration and local xAPI statement construction
+- Emitted `completed` xAPI event capture on the loopback real H5P host
 - Synthetic and private-source legacy importer regressions, with only synthetic material distributed
 - Node, Chromium, hosted axe, keyboard, responsive/zoom, deterministic package and privacy/security scans
 

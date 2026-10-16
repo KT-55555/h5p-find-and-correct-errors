@@ -1,4 +1,4 @@
-# Release checklist — 1.0.5 / 1.0.3 public RC
+# Release checklist — 1.0.5 / 1.0.3 public RC 3
 
 - [x] Requirements audit completed; no open P0/P1 implementation gap.
 - [x] Runtime/editor versions bumped and JSON validated.
@@ -9,6 +9,10 @@
 - [x] Existing content survives upgrade.
 - [x] Fresh native create/save/reopen/edit/run passes.
 - [x] State v3, retry limit and xAPI payload verified on host.
+- [x] Actual H5P `xAPI` completed event observed on the loopback host.
+- [x] Project-only library install and two synthetic activities verified on authorized Sandbox 2.
+- [x] Sandbox 2 visual/markup round-trip, alternative answer, hint, fractional options, deferred validation and one-retry limit verified.
+- [x] Sandbox 2 keyboard/status behavior, 320px reflow and clean browser console verified.
 - [x] Private five-error exercise passes 10/10 on loopback host only.
 - [x] Desktop, 390x844 and 320px-at-200%-zoom host layouts checked.
 - [x] Library-only and synthetic packages validate.
@@ -22,4 +26,5 @@
 - [ ] NVDA and VoiceOver human sessions — not tested; follow the published script.
 - [ ] Moodle, Lumi, H5P.com, Brightspace/LEARN, LTI, real LRS and gradebook — not tested.
 - [ ] Physical touch and mobile screen-reader session — not tested.
-- [ ] GitHub-hosted CI and release publication — pending authenticated GitHub access.
+- [ ] Sandbox 2 exported-file download/reimport — reuse UI verified, automated download file capture incomplete.
+- [ ] GitHub-hosted CI and `v1.0.5-rc.3` publication — pending authenticated GitHub access.
