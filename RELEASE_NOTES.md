@@ -1,4 +1,4 @@
-# v1.0.5-rc.1 release notes
+# v1.0.5-rc.2 release notes
 
 This release candidate contains runtime library 1.0.5 and editor library 1.0.3.
 

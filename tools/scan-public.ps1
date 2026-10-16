@@ -7,7 +7,7 @@ $ErrorActionPreference = 'Stop'
 $rootPath = (Resolve-Path -LiteralPath $Root).Path
 $textExtensions = @('.css', '.html', '.js', '.json', '.md', '.mjs', '.ps1', '.txt', '.yml', '.yaml')
 $forbiddenPathPatterns = @(
-    '(?i)(^|[\\/])(?:hotpot examples|private|evidence|node_modules)([\\/]|$)',
+    '(?i)(^|[\\/])(?:hotpot examples|private|node_modules)([\\/]|$)',
     '(?i)local-wordpress',
     '(?i)import-private\.test'
 )
@@ -35,8 +35,15 @@ function Test-TextContent {
 }
 
 $files = @(Get-ChildItem -LiteralPath $rootPath -Recurse -Force -File | Where-Object {
-    $_.FullName -notmatch '[\\/]\.git[\\/]' -and $_.FullName -notmatch '[\\/]node_modules[\\/]'
+    $_.FullName -notmatch '[\\/]\.git[\\/]' -and
+    $_.FullName -notmatch '[\\/]node_modules[\\/]' -and
+    $_.FullName -notmatch '[\\/]evidence[\\/]'
 })
+if (Test-Path -LiteralPath (Join-Path $rootPath '.git')) {
+    $trackedEvidence = @(& git -C $rootPath ls-files 'evidence/*')
+    if ($LASTEXITCODE -ne 0) { throw 'Unable to inspect tracked evidence paths.' }
+    if ($trackedEvidence.Count) { throw "Generated evidence is tracked publicly: $($trackedEvidence -join ', ')" }
+}
 foreach ($file in $files) {
     $relative = $file.FullName.Substring($rootPath.Length).TrimStart('\', '/').Replace('\', '/')
     foreach ($pattern in $forbiddenPathPatterns) {
