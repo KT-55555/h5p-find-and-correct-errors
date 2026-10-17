@@ -2,7 +2,7 @@
 
 Date: 16 October 2026
 
-Recommendation: **publish `v1.0.5-rc.3` as a pre-release; do not publish a stable release yet.**
+Decision: **`v1.0.5-rc.3` was published as a pre-release; do not publish a stable release yet.**
 
 | Gate | Result | Evidence / qualification |
 |---|---|---|
@@ -16,19 +16,19 @@ Recommendation: **publish `v1.0.5-rc.3` as a pre-release; do not publish a stabl
 | Human assistive technology | NOT TESTED | NVDA/VoiceOver/touch unavailable |
 | Moodle/Lumi portability | NOT TESTED | No disposable installations available |
 | Sanitized public tree/archive scan | PASS locally | Allow-list exporter plus nested archive/path/secret canaries |
-| Public reachable-history scan | Pending final public clone/push | Must run against the separate public repository, never this private history |
-| Hosted CI and release artifact download | Pending GitHub authentication/publication | Local CI-equivalent commands pass |
+| Public reachable-history scan | PASS | Every reachable blob in the separate public repository was scanned before push; no private canary, internal host/path or token pattern matched |
+| Hosted CI and release artifact download | PASS | CI run 38955573807 succeeded; all three downloaded `v1.0.5-rc.3` assets matched `SHA256SUMS.txt` |
 | Stable-release approval | NOT GRANTED | Specification explicitly reserves stable publication for owner approval |
 
 ## Version decision
 
-No runtime/editor source defect required a semantic H5P version bump. Candidate `v1.0.5-rc.3` therefore continues to contain runtime 1.0.5 and editor 1.0.3. The tag must not overwrite `v1.0.5-rc.2`.
+No runtime/editor source defect required a semantic H5P version bump. Candidate `v1.0.5-rc.3` therefore contains runtime 1.0.5 and editor 1.0.3. Its new tag targets sanitized public commit `351bae19a7a990c20931d7ccb100916a73deee9b`; `v1.0.5-rc.2` was not changed.
 
 ## Blocking evidence before stable
 
 - Owner review and explicit approval of the final stable publication.
 - At minimum, disposition of the untested NVDA/VoiceOver/touch and Moodle/Lumi risks; they may remain documented limitations if the owner accepts them, but must not be represented as passes.
-- Public GitHub Actions must pass on the sanitized repository and downloaded release assets/checksums must be reverified.
+- The published RC's GitHub Actions and downloaded checksum gates pass. Repeat those gates for any future stable commit/assets.
 - A real LRS/gradebook test is required only for any future LMS-grade reporting claim.
 
 ## Installation and rollback

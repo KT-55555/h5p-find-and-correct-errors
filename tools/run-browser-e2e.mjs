@@ -334,6 +334,23 @@ async function runRuntime(baseUrl) {
   await waitFor("document.activeElement?.classList.contains('fce-correction')", 'Space did not open and focus a correction field');
   pass('Keyboard Space activation', 'Space opened the target and transferred focus to the labeled correction field');
 
+  await evaluate(`__fce.resetTask(); true`);
+  const touchPoint = await evaluate(`(() => { const target=[...document.querySelectorAll('.fce-token')].find((node) => node.textContent === 'were'); const rect=target.getBoundingClientRect(); return { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 }; })()`);
+  await cdp.call('Emulation.setTouchEmulationEnabled', { enabled: true, maxTouchPoints: 1 });
+  await cdp.call('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ x: touchPoint.x, y: touchPoint.y, radiusX: 4, radiusY: 4, force: 1, id: 1 }] });
+  await cdp.call('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+  await waitFor("document.activeElement?.classList.contains('fce-correction')", 'Simulated touch did not activate the target');
+  assert.equal(await evaluate('document.activeElement.value'), 'were');
+  pass('Simulated touch activation', 'Chromium touch emulation opened the target and focused its correction field; physical touch remains untested.');
+  await cdp.call('Emulation.setTouchEmulationEnabled', { enabled: false, maxTouchPoints: 1 });
+
+  const rtl = await evaluate(`(() => { document.documentElement.dir='rtl'; __fce.resetTask(); const target=[...document.querySelectorAll('.fce-token')].find((node) => node.textContent === 'have'); target.click(); const input=document.activeElement; const result={ direction:getComputedStyle(document.querySelector('.h5p-find-and-correct-errors')).direction, value:input.value, label:input.getAttribute('aria-label'), scrollWidth:document.documentElement.scrollWidth, innerWidth }; document.documentElement.dir='ltr'; return result; })()`);
+  assert.equal(rtl.direction, 'rtl');
+  assert.equal(rtl.value, 'have completed');
+  assert.equal(rtl.label, 'Correction for error 2 of 2');
+  assert.ok(rtl.scrollWidth <= rtl.innerWidth, `RTL horizontal overflow: ${rtl.scrollWidth} > ${rtl.innerWidth}`);
+  pass('RTL stress check', 'Inherited RTL direction preserved multiword activation, accessible labeling and no horizontal overflow; comprehensive RTL support is not claimed.');
+
   await screenshot('m5-runtime-desktop.png');
   await runAxe('Learner surface');
 
@@ -463,6 +480,7 @@ try {
     results
   };
   await writeFile(join(evidenceDir, 'm5-browser-e2e-results.json'), `${JSON.stringify(report, null, 2)}\n`);
+  await writeFile(join(evidenceDir, 'm7-browser-e2e-results.json'), `${JSON.stringify(report, null, 2)}\n`);
   console.log(`Browser E2E: ${results.length} passed, 0 failed (${version.Browser}).`);
 }
 catch (error) {

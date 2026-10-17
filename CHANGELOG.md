@@ -1,5 +1,19 @@
 # Changelog
 
+## Runtime 1.0.5 / editor 1.0.3 stable release — 2026-10-16
+
+- Received owner authorization for the stable public release after the Milestone 7 validation gate.
+- Added a deterministic documentation archive and narrowed the checksum manifest to the three published payloads.
+- Retained explicit accessibility, LMS, LRS/gradebook and managed-host limitations.
+
+## Runtime 1.0.5 / editor 1.0.3 stable candidate validation — 2026-10-16
+
+- Captured and validated native H5P exports for both authorized Sandbox 2 activities, then re-imported the French Unicode activity into the isolated local WordPress host.
+- Verified the imported editor model, learner 4/4 completion, state v3 and genuine `answered`/`completed` H5P xAPI sequence.
+- Expanded rendered-Chromium coverage to 17 criteria with touch emulation and a focused RTL stress check.
+- Added final accessibility, compatibility, export/import, backup/update and release-gate records while retaining explicit untested-platform limitations.
+- Prepared a stable release candidate for owner approval without changing product versions, pushing public changes or publishing a stable release.
+
 ## Runtime 1.0.5 / editor 1.0.3 release candidate 3 — 2026-10-16
 
 - Validated official installation, native authoring and learner operation on an authorized WordPress 7.1.3 / H5P 1.17.9 multisite subsite.

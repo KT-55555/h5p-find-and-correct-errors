@@ -10,6 +10,7 @@ $expected = @(
 )
 
 Add-Type -AssemblyName System.IO.Compression
+Add-Type -AssemblyName System.IO.Compression.FileSystem
 
 function Read-ZipText {
     param([System.IO.Compression.ZipArchiveEntry] $Entry)
@@ -97,18 +98,20 @@ foreach ($name in $expected) {
 
 $releaseCandidate = Join-Path $dist 'release-candidate-1.0.5'
 $publicAllowList = @(
-    'ACCESSIBILITY_REPORT_M6.md',
+    'ACCESSIBILITY_REPORT_M7.md',
     'AUTHOR_GUIDE.md',
     'COMPATIBILITY_MATRIX.md',
-    'COMPATIBILITY_REPORT_M6.md',
+    'COMPATIBILITY_REPORT_M7.md',
+    'EXPORT_IMPORT_REPORT_M7.md',
     'GUIDE_FR.md',
+    'h5p-find-and-correct-errors-documentation-1.0.5.zip',
     'h5p-find-and-correct-errors-library-1.0.5.h5p',
     'INSTALLATION.md',
     'KNOWN_LIMITATIONS.md',
     'LICENSE',
     'README.md',
     'RELEASE_CHECKLIST.md',
-    'RELEASE_GATE_M6.md',
+    'RELEASE_GATE_M7.md',
     'RELEASE_NOTES.md',
     'SECURITY.md',
     'SECURITY_AND_LICENSE_AUDIT.md',
@@ -121,13 +124,40 @@ if (-not (Test-Path -LiteralPath $releaseCandidate -PathType Container)) { throw
 $actualPublicFiles = @(Get-ChildItem -LiteralPath $releaseCandidate -File | Select-Object -ExpandProperty Name | Sort-Object)
 if (Compare-Object $publicAllowList $actualPublicFiles) { throw 'Public release-candidate contents do not match the explicit allow-list.' }
 if ($actualPublicFiles | Where-Object { $_ -match 'private|accords' }) { throw 'Public release candidate contains a private fixture name.' }
+$publishedPayloads = @(
+    'h5p-find-and-correct-errors-documentation-1.0.5.zip',
+    'h5p-find-and-correct-errors-library-1.0.5.h5p',
+    'synthetic.h5p'
+) | Sort-Object
+$documentationFiles = @(
+    'ACCESSIBILITY_REPORT_M7.md', 'AUTHOR_GUIDE.md', 'COMPATIBILITY_MATRIX.md',
+    'COMPATIBILITY_REPORT_M7.md', 'EXPORT_IMPORT_REPORT_M7.md', 'GUIDE_FR.md',
+    'INSTALLATION.md', 'KNOWN_LIMITATIONS.md', 'LICENSE', 'MILESTONE5_ACCESSIBILITY_REPORT.md',
+    'README.md', 'RELEASE_CHECKLIST.md', 'RELEASE_GATE_M7.md', 'RELEASE_NOTES.md',
+    'SECURITY.md', 'SECURITY_AND_LICENSE_AUDIT.md', 'THIRD_PARTY_NOTICES.md'
+) | Sort-Object
+$documentationArchive = [System.IO.Compression.ZipFile]::OpenRead(
+    (Join-Path $releaseCandidate 'h5p-find-and-correct-errors-documentation-1.0.5.zip')
+)
+try {
+    $documentationEntries = @($documentationArchive.Entries | ForEach-Object FullName | Sort-Object)
+    if (Compare-Object $documentationFiles $documentationEntries) {
+        throw 'Documentation archive contents do not match the explicit allow-list.'
+    }
+}
+finally { $documentationArchive.Dispose() }
+$checksumNames = @()
 foreach ($line in Get-Content -LiteralPath (Join-Path $releaseCandidate 'SHA256SUMS.txt')) {
     if ($line -notmatch '^([0-9a-f]{64})  (.+)$') { throw "Malformed checksum line: $line" }
+    $checksumNames += $Matches[2]
     $listedFile = Join-Path $releaseCandidate $Matches[2]
     if (-not (Test-Path -LiteralPath $listedFile -PathType Leaf)) { throw "Checksum references missing file: $($Matches[2])" }
     if ((Get-Sha256Hex -Path $listedFile) -ne $Matches[1]) {
         throw "Checksum mismatch: $($Matches[2])"
     }
 }
+if (Compare-Object $publishedPayloads ($checksumNames | Sort-Object)) {
+    throw 'Checksum manifest must cover exactly the three published payloads.'
+}
 
-"Validated $($expected.Count) H5P archives, both bundled libraries, portable paths, metadata, content JSON, and the public RC allow-list/checksums."
+"Validated $($expected.Count) H5P archives, the documentation archive, bundled libraries, portable paths, metadata, content JSON, and the public release allow-list/checksums."

@@ -149,13 +149,14 @@ try {
         Remove-DirectoryWithRetry -Path $resolvedCandidate
     }
     New-Item -ItemType Directory -Path $releaseCandidate | Out-Null
-    foreach ($publicArtifact in @(
+    $publishedPayloads = @(
         'h5p-find-and-correct-errors-library-1.0.5.h5p',
         'synthetic.h5p'
-    )) {
+    )
+    foreach ($publicArtifact in $publishedPayloads) {
         Copy-Item -LiteralPath (Join-Path $dist $publicArtifact) -Destination (Join-Path $releaseCandidate $publicArtifact)
     }
-    foreach ($publicDocument in @(
+    $publicDocuments = @(
         'LICENSE',
         'README.md',
         'INSTALLATION.md',
@@ -167,19 +168,30 @@ try {
         'SECURITY.md',
         'SECURITY_AND_LICENSE_AUDIT.md',
         'MILESTONE5_ACCESSIBILITY_REPORT.md',
-        'ACCESSIBILITY_REPORT_M6.md',
-        'COMPATIBILITY_REPORT_M6.md',
-        'RELEASE_GATE_M6.md',
+        'ACCESSIBILITY_REPORT_M7.md',
+        'COMPATIBILITY_REPORT_M7.md',
+        'EXPORT_IMPORT_REPORT_M7.md',
+        'RELEASE_GATE_M7.md',
         'THIRD_PARTY_NOTICES.md',
         'KNOWN_LIMITATIONS.md'
-    )) {
+    )
+    foreach ($publicDocument in $publicDocuments) {
         Copy-Item -LiteralPath (Join-Path $projectRoot $publicDocument) -Destination (Join-Path $releaseCandidate $publicDocument)
     }
-    $checksumLines = Get-ChildItem -LiteralPath $releaseCandidate -File |
-        Sort-Object Name |
+    $documentationStage = Join-Path $tempRoot 'documentation'
+    New-Item -ItemType Directory -Path $documentationStage | Out-Null
+    foreach ($publicDocument in $publicDocuments) {
+        Copy-Item -LiteralPath (Join-Path $projectRoot $publicDocument) -Destination (Join-Path $documentationStage $publicDocument)
+    }
+    $documentationArchiveName = 'h5p-find-and-correct-errors-documentation-1.0.5.zip'
+    New-H5pArchive -SourceDirectory $documentationStage -DestinationPath (Join-Path $releaseCandidate $documentationArchiveName)
+    $publishedPayloads += $documentationArchiveName
+
+    $checksumLines = $publishedPayloads |
+        Sort-Object |
         ForEach-Object {
-            $hash = Get-Sha256Hex -Path $_.FullName
-            "$hash  $($_.Name)"
+            $hash = Get-Sha256Hex -Path (Join-Path $releaseCandidate $_)
+            "$hash  $_"
         }
     Set-Content -LiteralPath (Join-Path $releaseCandidate 'SHA256SUMS.txt') -Value $checksumLines -Encoding utf8
 }

@@ -1,4 +1,4 @@
-# Release checklist — 1.0.5 / 1.0.3 public RC 3
+# Release checklist — 1.0.5 / 1.0.3 stable candidate
 
 - [x] Requirements audit completed; no open P0/P1 implementation gap.
 - [x] Runtime/editor versions bumped and JSON validated.
@@ -26,5 +26,10 @@
 - [ ] NVDA and VoiceOver human sessions — not tested; follow the published script.
 - [ ] Moodle, Lumi, H5P.com, Brightspace/LEARN, LTI, real LRS and gradebook — not tested.
 - [ ] Physical touch and mobile screen-reader session — not tested.
-- [ ] Sandbox 2 exported-file download/reimport — reuse UI verified, automated download file capture incomplete.
-- [ ] GitHub-hosted CI and `v1.0.5-rc.3` publication — pending authenticated GitHub access.
+- [x] Sandbox 2 native exports for IDs 240/241 captured, hashed and structurally validated.
+- [x] Sandbox 2 ID 241 export imported locally; editor, learner, 4/4 score, xAPI and axe pass.
+- [x] Simulated Chromium touch and focused RTL stress checks pass.
+- [x] Administrator-coordinated Sandbox 2 backup/update/rollback runbook prepared.
+- [x] GitHub-hosted CI passed and `v1.0.5-rc.3` was published as a pre-release; downloaded assets match the published checksums.
+- [ ] Network administrator confirms a current coordinated backup before any university update.
+- [x] Owner explicitly approved stable publication and public push on 16 October 2026.

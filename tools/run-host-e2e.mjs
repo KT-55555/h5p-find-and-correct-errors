@@ -11,6 +11,7 @@ const evidenceDir = join(projectRoot, 'evidence');
 const dependencyRoot = process.env.FCE_TEST_DEPS_ROOT || projectRoot;
 const baseUrl = process.env.FCE_HOST_URL || 'http://127.0.0.1:8787';
 const contentId = Number(process.env.FCE_HOST_CONTENT_ID || 2);
+const importedSmoke = process.env.FCE_HOST_IMPORTED_SMOKE === '1';
 const hostInfoPath = join(process.env.LOCALAPPDATA || '', 'CodexLocalHosts', 'H5P-FindAndCorrectErrors', 'config', 'host-info.txt');
 const results = [];
 const browserErrors = [];
@@ -218,6 +219,89 @@ async function runLearner() {
   return { payload, learnerViolations, layouts };
 }
 
+async function runImportedLearner() {
+  const url = `${baseUrl}/wp-admin/admin.php?page=h5p&task=show&id=${contentId}`;
+  await navigate(url);
+  const frame = `document.querySelector('iframe.h5p-iframe').contentWindow`;
+  await waitFor(`Boolean(${frame}?.H5P?.instances?.[0] && ${frame}.document.querySelector('.h5p-find-and-correct-errors'))`, 'Imported learner did not initialize.');
+  const payload = await evaluate(`(async () => {
+    const target = ${frame};
+    const instance = target.H5P.instances[0];
+    const events = [];
+    instance.on('xAPI', event => events.push(event.data.statement));
+    if (instance.state && instance.state.completed) instance.resetTask();
+    const activate = text => {
+      const button = Array.from(target.document.querySelectorAll('.fce-token')).find(item => item.textContent.trim() === text);
+      if (!button) throw new Error('Missing imported token: ' + text);
+      button.click();
+    };
+    const enter = (label, value) => {
+      const input = target.document.querySelector('[aria-label="' + label + '"]');
+      if (!input) throw new Error('Missing imported correction field: ' + label);
+      input.value = value;
+      input.dispatchEvent(new target.Event('input', { bubbles: true }));
+    };
+    activate('était');
+    enter('Correction for error 1 of 2', 'étaient');
+    activate('ont');
+    enter('Correction for error 2 of 2', 'a fini');
+    instance.finish();
+    await new Promise(resolve => target.setTimeout(resolve, 300));
+    const statement = instance.getXAPIData().statement;
+    const state = instance.getCurrentState();
+    return {
+      title: document.querySelector('h1, h2')?.textContent?.trim() || document.title,
+      score: statement.result.score,
+      completion: statement.result.completion,
+      success: statement.result.success,
+      response: statement.result.response,
+      state,
+      model: instance.model.errors.map(error => ({
+        source: error.source,
+        accepted: error.accepted,
+        hints: error.hints,
+        explanation: error.explanation
+      })),
+      behaviour: {
+        validationTiming: instance.params.behaviour.validationTiming,
+        displayMode: instance.params.behaviour.displayMode,
+        maxRetries: instance.params.behaviour.maxRetries,
+        identificationPoints: instance.params.behaviour.identificationPoints,
+        correctionPoints: instance.params.behaviour.correctionPoints
+      },
+      emitted: events.map(statement => ({
+        verb: statement.verb && statement.verb.id,
+        score: statement.result && statement.result.score,
+        completion: statement.result && statement.result.completion
+      })),
+      scoreLabels: Array.from(target.document.querySelectorAll('*')).map(element => element.textContent.replace(/\\s+/g, ' ').trim()).filter(text => /^\\d+(?:\\.\\d+)?\\s*\\/\\s*\\d+(?:\\.\\d+)?$/.test(text)),
+      bodyText: target.document.body.innerText
+    };
+  })()`);
+  assert.match(payload.title, /Français Unicode/);
+  assert.equal(payload.model.length, 2);
+  assert.deepEqual(payload.model.map(error => error.source), ['était', 'ont terminé']);
+  assert.deepEqual(payload.model[1].accepted, ['a terminé', 'a fini']);
+  assert.equal(payload.model[0].hints.length, 1);
+  assert.match(payload.model[0].explanation, /pluriel/);
+  assert.equal(payload.behaviour.validationTiming, 'deferred');
+  assert.equal(payload.behaviour.displayMode, 'learner');
+  assert.equal(payload.state.version, 3);
+  assert.equal(payload.state.completed, true);
+  assert.equal(payload.completion, true);
+  assert.equal(payload.success, true);
+  assert.equal(payload.score.raw, 4);
+  assert.equal(payload.score.max, 4);
+  assert.deepEqual(payload.emitted.map(event => event.verb.split('/').pop()), ['answered', 'completed']);
+  assert.ok(payload.emitted.every(event => event.score.raw === 4 && event.score.max === 4 && event.completion === true));
+  assert.ok(payload.scoreLabels.some(text => /4\s*\/\s*4/.test(text)), `Expected rendered 4/4 score, found: ${payload.scoreLabels.join(', ')}`);
+  pass('Hosted export local re-import', 'Imported content preserved two targets, French Unicode, alternate answer, hint, feedback, deferred validation and learner-response display.');
+  pass('Imported learner score and xAPI', 'Keyboard-equivalent learner completion scored 4/4 and emitted answered/completed xAPI events with matching scores.');
+  const learnerViolations = await axeScope(frame, '.h5p-find-and-correct-errors', 'Imported learner');
+  await screenshot('m7-imported-host-learner.png');
+  return { payload, learnerViolations };
+}
+
 async function runEditor() {
   await navigate(`${baseUrl}/wp-admin/admin.php?page=h5p_new&id=${contentId}`);
   const frame = `document.querySelector('iframe.h5p-editor-iframe').contentWindow`;
@@ -229,6 +313,22 @@ async function runEditor() {
   const editorViolations = await axeScope(frame, '.h5peditor-fce', 'Editor widget');
   await screenshot('m5-host-editor-desktop.png');
   pass('Actual native editor reopen', 'Two targets and both authoring modes reopened after save/update; updated title persisted.');
+  return { editor, editorViolations };
+}
+
+async function runImportedEditor() {
+  await navigate(`${baseUrl}/wp-admin/admin.php?page=h5p_new&id=${contentId}`);
+  const frame = `document.querySelector('iframe.h5p-editor-iframe').contentWindow`;
+  await waitFor(`Boolean(${frame}?.document?.querySelector('.h5peditor-fce'))`, 'Imported editor did not initialize.');
+  const editor = await evaluate(`(() => { const doc=${frame}.document; return { markers: doc.querySelectorAll('[data-fce-id]').length, tabs: doc.querySelectorAll('[role=tab]').length, title: doc.querySelector('#field-extratitle--1')?.value || '', markup: doc.querySelector('.h5peditor-fce__markup')?.value || '' }; })()`);
+  assert.equal(editor.markers, 2);
+  assert.equal(editor.tabs, 2);
+  assert.match(editor.title, /Français Unicode/);
+  assert.match(editor.markup, /\[était\|étaient\]/);
+  assert.match(editor.markup, /\[ont terminé\|a terminé\|\|a fini\]/);
+  const editorViolations = await axeScope(frame, '.h5peditor-fce', 'Imported editor');
+  await screenshot('m7-imported-host-editor.png');
+  pass('Imported native editor reopen', 'The hosted export reopened with two targets and both authoring modes in the local native editor.');
   return { editor, editorViolations };
 }
 
@@ -248,20 +348,22 @@ try {
   await cdp.connect();
   await cdp.call('Page.enable'); await cdp.call('Runtime.enable'); await cdp.call('Log.enable');
   await login();
-  const learner = await runLearner();
-  const editor = await runEditor();
+  const learner = importedSmoke ? await runImportedLearner() : await runLearner();
+  const editor = importedSmoke ? await runImportedEditor() : await runEditor();
   const knownHostWarnings = browserErrors.filter((message) => message.includes("Allow attribute will take precedence over 'allowfullscreen'"));
   const unexpectedBrowserErrors = browserErrors.filter((message) => !knownHostWarnings.includes(message));
   assert.deepEqual(unexpectedBrowserErrors, [], `Unexpected browser console/runtime findings: ${unexpectedBrowserErrors.join('; ')}`);
   pass('Actual-host browser console', `No uncaught exceptions or project warnings; ${knownHostWarnings.length} known Chromium/H5P iframe allowfullscreen warning recorded.`);
   const report = { environment: { browser: version.Browser, host: baseUrl, contentId }, summary: { passed: results.length, failed: 0 }, results, learner, editor, browserErrors };
-  await writeFile(join(evidenceDir, 'm5-host-e2e-results.json'), `${JSON.stringify(report, null, 2)}\n`);
+  const reportName = importedSmoke ? 'm7-imported-host-e2e-results.json' : 'm5-host-e2e-results.json';
+  await writeFile(join(evidenceDir, reportName), `${JSON.stringify(report, null, 2)}\n`);
   console.log(`Host E2E: ${results.length} passed, 0 failed (${version.Browser}).`);
 }
 catch (error) {
   const report = { environment: { host: baseUrl, contentId }, summary: { passed: results.length, failed: 1 }, results, failure: error.message, browserErrors };
   await mkdir(evidenceDir, { recursive: true });
-  await writeFile(join(evidenceDir, 'm5-host-e2e-results.json'), `${JSON.stringify(report, null, 2)}\n`);
+  const reportName = importedSmoke ? 'm7-imported-host-e2e-results.json' : 'm5-host-e2e-results.json';
+  await writeFile(join(evidenceDir, reportName), `${JSON.stringify(report, null, 2)}\n`);
   console.error(error.stack || error.message);
   process.exitCode = 1;
 }
